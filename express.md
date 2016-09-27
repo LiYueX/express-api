@@ -18,7 +18,7 @@
 5. HTTP 请求  = Verb(动词) + Path（路径）
   ( ps: HTTP请求 = get/post..   +  /about )
 
-6. express的代码是要在服务器上运行的。
+6. express 的代码是要在服务器上运行的。
 ```js
   app.get('/', function (req, res) {
      res.send('Hello Li Yuexi')
@@ -28,7 +28,9 @@
      res.send('Hello Li Yuexi')
   })
 ```
-  以上都是服务器用来接收请求，常用的请求有get和post两种，返回响应请求用get，向服务器写数据用post请求
+  以上都是服务器用来接收请求，常用的请求有get和post两种。
+  - get : 从指定的资源请求数据并对客户端响应。
+  - post : 是向指定的资源提交要被处理的数据。
 
 7. 什么是路由？router?
   基本意思：根据http请求，决定哪个页面要显示，根据http请求，决定哪一段代码先执行。
