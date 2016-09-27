@@ -64,4 +64,4 @@ app.get('/:username', function (req, res) {
   res.send(page)
 })
 ```
-console.log(req.params) --> { username: 'liyeuxi' }
+console.log(req.params) --> { username: 'liyuexi' }
