@@ -41,27 +41,40 @@
 
 ### 读取请求参数
 
-request = verb + Path
+1. request = verb + Path
 
-参数(parameters)要作为 path 来传入后台
+  参数(parameters)要作为 path 来传入后台
 
-这样，可以实现前台数据传入后台代码中
+  这样，可以实现前台数据传入后台代码中
 
+  ```js
+  app.get('/:path', function (req, res) {
+    console.log(req.params);
+    var path = req.params.path
+    var page="<html>"+
+              "<body>"+
+                "<a href='http://localhost:3000/'>home</a>"+
+                "<a href='http://localhost:3000/about'>about</a>"+
+                "<h1>"+
+                  path+'的购物车'+
+                "</h1>"+
+              "</body>"+
+              "</html>"
+
+    res.send(page)
+  })
+  ```
+  console.log(req.params) --> { username: 'liyuexi' }
+
+2. 后台程度调试工具curl,模拟浏览器请求
+
+  启用node服务器，再开一个命令行，执行下面语句：
+  curl --request GET localhost:3000/liyuexi
 ```js
-app.get('/:username', function (req, res) {
-  console.log(req.params);
-  var username = req.params.username
-  var page="<html>"+
-            "<body>"+
-              "<a href='http://localhost:3000/'>home</a>"+
-              "<a href='http://localhost:3000/about'>about</a>"+
-              "<h1>"+
-                username+'的购物车'+
-              "</h1>"+
-            "</body>"+
-            "</html>"
+  app.post('/:path', function (req, res) {
+    res.send('a post request has received by '+req.params.path+'\n')
+  })
 
-  res.send(page)
-})
+  curl --request POST localhost:3000/mengmeng
+  返回：a post request has received by mengmeng
 ```
-console.log(req.params) --> { username: 'liyuexi' }

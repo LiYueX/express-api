@@ -1,30 +1,28 @@
 var express = require('express')
 var app = express()
-app.get('/:username', function (req, res) {
-  console.log(req.params);
-  var username = req.params.username
+app.get('/:path', function (req, res) {
+  console.log(req.query);
+  var path = req.params.path
   var page="<html>"+
             "<body>"+
-              "<a href='http://localhost:3000/'>home</a>"+
-              "<a href='http://localhost:3000/about'>about</a>"+
               "<h1>"+
-                username+'的购物车'+
+                path+'的页面下，'+
+                req.query.username+"的购物车,它今年"+
+                req.query.age+'岁了'+
               "</h1>"+
+              "<form>"+
+                "<input type='text' name='username'/>"+
+                "<input type='text' name='age'/>"+
+                "<input type='submit' value='提交'/>"+
+              "</form>"+
             "</body>"+
             "</html>"
+  res.send(page)
+})
+app.post('/:path', function (req, res) {
+  res.send('a post request has received by '+req.params.path+'\n')
+})
 
-  res.send(page)
-})
-app.get('/about', function (req, res) {
-  var page="<html>"+
-            "<body>"+
-            "  <a href='http://localhost:3000/'>home</a>"+
-            "  <a href='http://localhost:3000/about'>about</a>"+
-            "  <h1>about.html</h1>"+
-            "</body>"+
-            "</html>"
-  res.send(page)
-})
 
 
 app.listen(3000,function(){
