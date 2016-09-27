@@ -38,3 +38,30 @@
   ps:get /about
   - 路由代码
   - 根据get内的路径，选择执行的代码段
+
+### 读取请求参数
+
+request = verb + Path
+
+参数(parameters)要作为 path 来传入后台
+
+这样，可以实现前台数据传入后台代码中
+
+```js
+app.get('/:username', function (req, res) {
+  console.log(req.params);
+  var username = req.params.username
+  var page="<html>"+
+            "<body>"+
+              "<a href='http://localhost:3000/'>home</a>"+
+              "<a href='http://localhost:3000/about'>about</a>"+
+              "<h1>"+
+                username+'的购物车'+
+              "</h1>"+
+            "</body>"+
+            "</html>"
+
+  res.send(page)
+})
+```
+console.log(req.params) --> { username: 'liyeuxi' }
