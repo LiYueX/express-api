@@ -1,30 +1,34 @@
-var express = require('express')
-var app = express()
-app.get('/:path', function (req, res) {
-  console.log(req.query);
-  var path = req.params.path
-  var page="<html>"+
-            "<body>"+
-              "<h1>"+
-                path+'的页面下，'+
-                req.query.username+"的购物车,它今年"+
-                req.query.age+'岁了'+
-              "</h1>"+
-              "<form>"+
-                "<input type='text' name='username'/>"+
-                "<input type='text' name='age'/>"+
-                "<input type='submit' value='提交'/>"+
-              "</form>"+
-            "</body>"+
-            "</html>"
-  res.send(page)
-})
-app.post('/:path', function (req, res) {
-  res.send('a post request has received by '+req.params.path+'\n')
-})
+var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost:27017/express-api');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+   console.log("we're connected success!");
+   var personSchema = mongoose.Schema({
+     username: String,
+     password: String,
+     age: String
+   });
+   var Person = mongoose.model('person',personSchema);
+  //var xixi  = new person({username:'xixi',password:'liyuexi',age:'24'});
+  //  xixi.username='meimei';
+  //  xixi.age='21';
+  //  xixi.save();
+  //  console.log(xixi);
+  //  //异步执行
+  //  Person.find().exec(function(err,people){
+  //    console.log(people);
+  //  })
 
-
-
-app.listen(3000,function(){
-  console.log("running on port 3000...");
-})
+  Person.findById({_id: '57ecbc43af054c1370ad8d53'}, function(err, person) {
+    person.username = 'rrrrrr'
+    person.remove(function(err){
+      console.log('更新了！')
+      Person.find().exec(function(err, person) {
+        // 异步执行
+        console.log(person);
+      });
+    });
+  });
+});
